@@ -4,12 +4,14 @@ public class Range {
     private double from;
     private double to;
 
+    public Range() {
+    }
     public Range(double from, double to) {
         this.from = from;
         this.to = to;
     }
 
-    public double getFrom(double from) {
+    public double getFrom() {
         return from;
     }
 
@@ -18,7 +20,7 @@ public class Range {
     }
 
 
-    public double getTo(double to) {
+    public double getTo() {
         return to;
     }
 
@@ -32,5 +34,18 @@ public class Range {
 
     public boolean isInside(double number) {
         return from <= number && number <= to;
+    }
+
+    public Range getIntersection(Range range) {
+        if (this.to < range.getFrom() || range.getTo() < this.from) {
+            return null;
+        }
+
+        Range intersectionRange = new Range();
+
+        intersectionRange.setFrom(Math.max(this.from, range.getFrom()));
+        intersectionRange.setTo(Math.min(this.to, range.getTo()));
+
+        return intersectionRange;
     }
 }
