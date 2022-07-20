@@ -3,40 +3,48 @@ package ru.javacourse.ryabushkin.range_main;
 import ru.javacourse.ryabushkin.range.Range;
 
 public class Main {
+    public static void printRangesArray(Range[] ranges) {
+        StringBuilder string = new StringBuilder();
+
+        string.append("[");
+        for (Range range : ranges) {
+            string.append(range.toString()).append(", ");
+        }
+
+        string.delete(string.length() - 2, string.length());
+        string.append("]");
+
+        System.out.print(string);
+    }
+
     public static void main(String[] args) {
-        double oneRangeBegin = 0;
-        double oneRangeEnd = 4;
+        double range1From = 0;
+        double range1To = 7;
 
-        Range range = new Range(oneRangeBegin, oneRangeEnd);
+        Range range1 = new Range(range1From, range1To);
 
-        range.setFrom(oneRangeBegin);
-        range.setTo(oneRangeEnd);
+        range1From = range1.from() - 1;
+        range1To = range1.to() - 1;
 
-        oneRangeBegin = range.getFrom() - 1;
-        oneRangeEnd = range.getTo() - 1;
+        range1.setFrom(range1From);
+        range1.setTo(range1To);
 
-        range.setFrom(oneRangeBegin);
-        range.setTo(oneRangeEnd);
+        double range2From = 4;
+        double range2To = 5;
 
-        double twoRangeBegin = 4;
-        double twoRangeEnd = 5;
+        Range range2 = new Range(range2From, range2To);
 
-        Range range2 = new Range(twoRangeBegin, twoRangeEnd);
+        range2From = range2.from() + 1;
+        range2To = range2.to() + 1;
 
-        range2.setFrom(twoRangeBegin);
-        range2.setTo(twoRangeEnd);
-
-        twoRangeBegin = range2.getFrom() + 1;
-        twoRangeEnd = range2.getTo() + 1;
-
-        range2.setFrom(twoRangeBegin);
-        range2.setTo(twoRangeEnd);
+        range2.setFrom(range2From);
+        range2.setTo(range2To);
 
         double number = 5.14;
 
-        if (range.isInside(number) && range2.isInside(number)) {
+        if (range1.isInside(number) && range2.isInside(number)) {
             System.out.println("Число " + number + " принадлежит каждому интервалу.");
-        } else  if (range.isInside(number)) {
+        } else if (range1.isInside(number)) {
             System.out.println("Число " + number + " принадлежит первому интервалу.");
         } else if (range2.isInside(number)) {
             System.out.println("Число " + number + " принадлежит второму интервалу.");
@@ -44,35 +52,26 @@ public class Main {
             System.out.println("Число " + number + " не принадлежит интервалам.");
         }
 
-        System.out.println("Длина первого интервала = " + range.getLength());
+        System.out.println("Длина первого интервала = " + range1.getLength());
 
-        Range rangesIntersection = range.getIntersection(range2);
+        Range rangesIntersection = range1.getIntersection(range2);
 
         if (rangesIntersection == null) {
             System.out.println("Интервалы не пересекаются.");
         } else {
-            System.out.println("Интервалы пересекаются в диапазоне от " + rangesIntersection.getFrom()
-                    + " до " + rangesIntersection.getTo());
+            System.out.println("Интервалы пересекаются в диапазоне: " + rangesIntersection);
         }
 
-        Range[] rangesUnion = range.getUnion(range2);
+        Range[] rangesUnion = range1.getUnion(range2);
 
-        System.out.print("Объединение двух интервалов раполагается в диапозоне");
-        for (Range ranges : rangesUnion) {
-            System.out.print(" от " + ranges.getFrom() + " до " + ranges.getTo());
-        }
+        System.out.print("Объединение двух интервалов раполагается в диапозоне: ");
+        printRangesArray(rangesUnion);
         System.out.println();
 
-        Range[] rangesComplement = range.getComplement(range2);
+        Range[] rangesDifference = range1.getDifference(range2);
 
-        if (rangesComplement == null) {
-            System.out.println("Разность интервалов равна пустому множеству");
-        } else {
-            System.out.print("Разность двух интервалов раполагается в диапозоне");
-            for (Range ranges : rangesComplement) {
-                System.out.print(" от " + ranges.getFrom()
-                        + " до " + ranges.getTo());
-            }
-        }
+        System.out.print("Разность двух интервалов раполагается в диапозоне: ");
+        printRangesArray(rangesDifference);
+        System.out.println();
     }
 }

@@ -4,15 +4,12 @@ public class Range {
     private double from;
     private double to;
 
-    public Range() {
-    }
-
     public Range(double from, double to) {
         this.from = from;
         this.to = to;
     }
 
-    public double getFrom() {
+    public double from() {
         return from;
     }
 
@@ -20,8 +17,7 @@ public class Range {
         this.from = from;
     }
 
-
-    public double getTo() {
+    public double to() {
         return to;
     }
 
@@ -33,118 +29,51 @@ public class Range {
         return to - from;
     }
 
+    public String toString() {
+        return "(" + from + "; " + to + ")";
+    }
+
     public boolean isInside(double number) {
         return from <= number && number <= to;
     }
 
     public Range getIntersection(Range range) {
-        if (this.to <= range.getFrom() || this.from >= range.getTo()) {
+        if (to <= range.from() || from >= range.to()) {
             return null;
         }
 
-        Range rangesIntersection = new Range();
-
-        rangesIntersection.setFrom(Math.max(this.from, range.getFrom()));
-        rangesIntersection.setTo(Math.min(this.to, range.getTo()));
-
-        return rangesIntersection;
+        return new Range(Math.max(from, range.from), Math.min(to, range.to));
     }
 
     public Range[] getUnion(Range range) {
-        if (this.getIntersection(range) == null) {
-            if (this.from == range.getTo() || this.to == range.getFrom()) {
-                Range[] rangesUnion = new Range[1];
-
-                Range tempRange = new Range();
-
-                tempRange.setFrom(Math.min(this.from, range.getFrom()));
-                tempRange.setTo(Math.max(this.to, range.getTo()));
-
-                rangesUnion[0] = tempRange;
-
-                return rangesUnion;
+        if (to <= range.from() || from >= range.to()) {
+            if (from == range.to() || to == range.from()) {
+                return new Range[]{new Range(Math.min(from, range.from), Math.max(to, range.to))};
             }
 
-            Range[] rangesUnion = new Range[2];
-
-            rangesUnion[0] = this;
-            rangesUnion[1] = range;
-
-            return rangesUnion;
+            return new Range[]{new Range(from, to), range};
         }
 
-        Range[] rangesUnion = new Range[1];
-
-        Range tempRange = new Range();
-
-        tempRange.setFrom(Math.min(this.from, range.getFrom()));
-        tempRange.setTo(Math.max(this.to, range.getTo()));
-
-        rangesUnion[0] = tempRange;
-
-        return rangesUnion;
+        return new Range[]{new Range(Math.min(from, range.from), Math.max(to, range.to))};
     }
 
-    public Range[] getComplement(Range range) {
-        Range[] rangesComplement;
-
-        if (getIntersection(range) == null) { // 6
-            rangesComplement = new Range[1];
-
-            rangesComplement[0] = this;
-
-            return rangesComplement;
+    public Range[] getDifference(Range range) {
+        if (to <= range.from() || from >= range.to()) { // 6
+            return new Range[]{new Range(from, to)};
         }
 
-        if (this.from > range.getFrom() && this.to > range.getTo()) { // 5
-            rangesComplement = new Range[1];
-
-            Range tempRange = new Range();
-
-            tempRange.setFrom(range.getTo());
-            tempRange.setTo(this.to);
-
-            rangesComplement[0] = tempRange;
-
-            return rangesComplement;
+        if (from >= range.from && to > range.to) { // 5, 7
+            return new Range[]{new Range(range.to, to)};
         }
 
-        if (this.from < range.getFrom() && this.to < range.getTo()) { // 4
-            rangesComplement = new Range[1];
-
-            Range tempRange = new Range();
-
-            tempRange.setFrom(this.from);
-            tempRange.setTo(range.getFrom());
-
-            rangesComplement[0] = tempRange;
-
-            return rangesComplement;
+        if (from < range.from() && to <= range.to()) { // 4, 8
+            return new Range[]{new Range(from, range.from)};
         }
 
-        if (this.from < range.getFrom() && this.to > range.getTo()) {  // 2
-            rangesComplement = new Range[2];
-
-            Range tempRange1 = new Range();
-
-            tempRange1.setFrom(this.from);
-            tempRange1.setTo(range.getFrom());
-
-            rangesComplement[0] = tempRange1;
-
-            Range tempRange2 = new Range();
-
-            tempRange2.setFrom(range.getTo());
-            tempRange2.setTo(this.to);
-
-            rangesComplement[1] = tempRange2;
-
-            return rangesComplement;
+        if (from < range.from() && to > range.to()) {  // 2
+            return new Range[]{new Range(from, range.from), new Range(range.to, to)};
         }
 
-       /* if (this.from >= range.getFrom() && this.to <= range.getTo()) { // 1, 3
-            return null;
-        } */
-        return null;
+        return new Range[]{};
     }
 }
