@@ -1,5 +1,7 @@
 package ru.javacourse.ryabushkin.shapes;
 
+import java.util.Objects;
+
 public class Triangle implements Shape {
     private final double x1;
     private final double y1;
@@ -17,8 +19,33 @@ public class Triangle implements Shape {
         this.y3 = y3;
     }
 
+    public boolean equels(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Triangle guest = (Triangle) obj;
+        return Double.compare(x1, guest.x1) == 0 && Double.compare(y1, guest.y1) == 0 &&
+                Double.compare(x2, guest.x2) == 0 && Double.compare(y2, guest.y2) == 0 &&
+                Double.compare(x3, guest.x3) == 0 && Double.compare(y3, guest.y3) == 0;
+    }
+
+    public int hashCode() {
+        return Objects.hashCode(x1) + Objects.hashCode(x2) + Objects.hashCode(x3) +
+                Objects.hashCode(y1) + Objects.hashCode(y2) + Objects.hashCode(y3);
+    }
+
+    public String toString() {
+        return "shape = " + getName() + ", area = " + getArea() + ", perimeter = " + getPerimeter() + ", width = " +
+                getWidth() + ", height = " + getHeight();
+    }
+
     public String getName() {
-        return new String("triangle");
+        return "triangle";
     }
 
     public double getWidth() {
@@ -34,7 +61,7 @@ public class Triangle implements Shape {
     }
 
     public double getPerimeter() {
-       // √((X₂-X₁)² + (Y₂-Y₁)²) + √(( X₃-X₂)² + (Y₃-Y₂)²) + √((X₃-X₁)² + (Y₃-Y₁)²).
+        // √((X₂-X₁)² + (Y₂-Y₁)²) + √(( X₃-X₂)² + (Y₃-Y₂)²) + √((X₃-X₁)² + (Y₃-Y₁)²).
 
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)) + Math.sqrt(Math.pow(x3 - x2, 2) + Math.pow(y3 - y2, 2))
                 + Math.sqrt(Math.pow(x3 - x1, 2) + Math.pow(y3 - y1, 2));

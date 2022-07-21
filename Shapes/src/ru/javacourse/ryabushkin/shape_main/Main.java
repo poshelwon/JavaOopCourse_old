@@ -65,13 +65,10 @@ public class Main {
 
         Shape maxAreaShape = getMaxAreaShape(shapes);
 
-        System.out.println("Max area shape = " + maxAreaShape.getName() + ", area = " + maxAreaShape.getArea() +
-                ", perimeter = " + maxAreaShape.getPerimeter() + ", width = " + maxAreaShape.getWidth() + ", height = " + maxAreaShape.getHeight());
+        System.out.println("Max area " + maxAreaShape.toString());
 
-        Shape PreMaxPerimeterShape = getPreMaxPerimeterShape(shapes);
+        Shape preMaxPerimeterShape = getPreMaxPerimeterShape(shapes);
 
-        System.out.println("Pre-max perimeter shape = " + PreMaxPerimeterShape.getName() + ", area = " + PreMaxPerimeterShape.getArea() +
-                ", perimeter = " + PreMaxPerimeterShape.getPerimeter() + ", width = " + PreMaxPerimeterShape.getWidth() +
-                ", height = " + PreMaxPerimeterShape.getHeight());
+        System.out.println("Pre-max perimeter " + preMaxPerimeterShape.toString());
     }
 }
