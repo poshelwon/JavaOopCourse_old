@@ -1,17 +1,32 @@
 package ru.javacourse.ryabushkin.shapes;
 
-import java.util.Objects;
-
 public class Rectangle implements Shape {
-    private final double sideLength1;
-    private final double sideLength2;
+    private double width;
+    private double height;
 
-    public Rectangle(double sideLength1, double sideLength2) {
-        this.sideLength1 = sideLength1;
-        this.sideLength2 = sideLength2;
+    public Rectangle(double width, double height) {
+        this.width = width;
+        this.height = height;
     }
 
-    public boolean equels(Object obj) {
+    public double getWidth() {
+        return width;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -20,36 +35,35 @@ public class Rectangle implements Shape {
             return false;
         }
 
-        Rectangle guest = (Rectangle) obj;
-        return Double.compare(sideLength1, guest.sideLength1) == 0 && Double.compare(sideLength2, guest.sideLength2) == 0;
+        Rectangle rectangle = (Rectangle) obj;
+        return width == rectangle.width && height == rectangle.height;
     }
 
+    @Override
     public int hashCode() {
-        return Objects.hashCode(sideLength1) + Objects.hash(sideLength2);
+        final int prime = 37;
+        int hash = 1;
+
+        hash = prime * hash + Double.hashCode(width);
+        hash = prime * hash + Double.hashCode(height);
+
+        return hash;
     }
 
+    @Override
     public String toString() {
-        return "shape = " + getName() + ", area = " + getArea() + ", perimeter = " + getPerimeter() + ", width = " +
-                getWidth() + ", height = " + getHeight();
+        return "width = " + width + ", height = " + height +", area = " + getArea() + ", perimeter = " + getPerimeter();
     }
 
     public String getName() {
         return "rectangle";
     }
 
-    public double getWidth() {
-        return sideLength1;
-    }
-
-    public double getHeight() {
-        return sideLength2;
-    }
-
     public double getArea() {
-        return sideLength1 * sideLength2;
+        return width * height;
     }
 
     public double getPerimeter() {
-        return (sideLength1 + sideLength2) * 2;
+        return (width + height) * 2;
     }
 }

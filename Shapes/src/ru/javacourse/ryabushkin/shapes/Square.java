@@ -1,15 +1,23 @@
 package ru.javacourse.ryabushkin.shapes;
 
-import java.util.Objects;
-
 public class Square implements Shape {
-    private final double sideLength;
+    private double sideLength;
+    static final int sidesCount = 4;
 
     public Square(double sideLength) {
         this.sideLength = sideLength;
     }
 
-    public boolean equels(Object obj) {
+    public double getSideLength() {
+        return sideLength;
+    }
+
+    public void setSideLength(double sideLength) {
+        this.sideLength = sideLength;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -18,17 +26,21 @@ public class Square implements Shape {
             return false;
         }
 
-        Square guest = (Square) obj;
-        return Double.compare(sideLength, guest.sideLength) == 0;
+        Square square = (Square) obj;
+        return sideLength == square.sideLength;
     }
 
+    @Override
     public int hashCode() {
-        return Objects.hashCode(sideLength);
+        final int prime = 37;
+        int hash = 1;
+
+        return prime * hash + Double.hashCode(sideLength);
     }
 
+    @Override
     public String toString() {
-        return "shape = " + getName() + ", area = " + getArea() + ", perimeter = " + getPerimeter() + ", width = " +
-                getWidth() + ", height = " + getHeight();
+        return "sideLength = " + sideLength + ", area = " + getArea() + ", perimeter = " + getPerimeter();
     }
 
     public String getName() {
@@ -36,11 +48,11 @@ public class Square implements Shape {
     }
 
     public double getWidth() {
-        return this.sideLength;
+        return sideLength;
     }
 
     public double getHeight() {
-        return this.sideLength;
+        return sideLength;
     }
 
     public double getArea() {
@@ -48,7 +60,6 @@ public class Square implements Shape {
     }
 
     public double getPerimeter() {
-        final int sideCount = 4;
-        return sideLength * sideCount;
+        return sideLength * sidesCount;
     }
 }

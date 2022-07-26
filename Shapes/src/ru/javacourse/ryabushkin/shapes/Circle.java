@@ -1,15 +1,22 @@
 package ru.javacourse.ryabushkin.shapes;
 
-import java.util.Objects;
-
 public class Circle implements Shape {
-    private final double radius;
+    private double radius;
 
     public Circle(double radius) {
         this.radius = radius;
     }
 
-    public boolean equels(Object obj) {
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -18,17 +25,21 @@ public class Circle implements Shape {
             return false;
         }
 
-        Circle guest = (Circle) obj;
-        return Double.compare(radius, guest.radius) == 0;
+        Circle circle = (Circle) obj;
+        return radius == circle.radius;
     }
 
+    @Override
     public int hashCode() {
-        return Objects.hashCode(radius);
+        final int prime = 37;
+        int hash = 1;
+
+        return prime * hash + Double.hashCode(radius);
     }
 
+    @Override
     public String toString() {
-        return "shape = " + getName() + ", area = " + getArea() + ", perimeter = " + getPerimeter() + ", width = " +
-                getWidth() + ", height = " + getHeight();
+        return "radius = " + radius + ", area = " + getArea() + ", perimeter = " + getPerimeter();
     }
 
     public String getName() {
@@ -36,15 +47,15 @@ public class Circle implements Shape {
     }
 
     public double getWidth() {
-        return this.radius * 2;
+        return radius * 2;
     }
 
     public double getHeight() {
-        return this.radius * 2;
+        return radius * 2;
     }
 
     public double getArea() {
-        return Math.PI * Math.pow(radius, 2);
+        return Math.PI * radius * radius;
     }
 
     public double getPerimeter() {
