@@ -3,18 +3,19 @@ package ru.javacourse.ryabushkin.range_main;
 import ru.javacourse.ryabushkin.range.Range;
 
 public class Main {
-    public static void printRangesArray(Range[] ranges) {
-        StringBuilder string = new StringBuilder();
+    public static void printRanges(Range[] ranges) {
+        StringBuilder stringBuilder = new StringBuilder();
 
-        string.append("[");
+        stringBuilder.append("[");
+
         for (Range range : ranges) {
-            string.append(range.toString()).append(", ");
+            stringBuilder.append(range).append(", ");
         }
 
-        string.delete(string.length() - 2, string.length());
-        string.append("]");
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+        stringBuilder.append("]");
 
-        System.out.print(string);
+        System.out.print(stringBuilder);
     }
 
     public static void main(String[] args) {
@@ -23,8 +24,8 @@ public class Main {
 
         Range range1 = new Range(range1From, range1To);
 
-        range1From = range1.from() - 1;
-        range1To = range1.to() - 1;
+        range1From = range1.getFrom() - 1;
+        range1To = range1.getTo() - 1;
 
         range1.setFrom(range1From);
         range1.setTo(range1To);
@@ -34,8 +35,8 @@ public class Main {
 
         Range range2 = new Range(range2From, range2To);
 
-        range2From = range2.from() + 1;
-        range2To = range2.to() + 1;
+        range2From = range2.getFrom() + 1;
+        range2To = range2.getTo() + 1;
 
         range2.setFrom(range2From);
         range2.setTo(range2To);
@@ -64,14 +65,14 @@ public class Main {
 
         Range[] rangesUnion = range1.getUnion(range2);
 
-        System.out.print("Объединение двух интервалов раполагается в диапозоне: ");
-        printRangesArray(rangesUnion);
+        System.out.print("Объединение двух интервалов располагается в диапазоне: ");
+        printRanges(rangesUnion);
         System.out.println();
 
         Range[] rangesDifference = range1.getDifference(range2);
 
-        System.out.print("Разность двух интервалов раполагается в диапозоне: ");
-        printRangesArray(rangesDifference);
+        System.out.print("Разность двух интервалов располагается в диапазоне: ");
+        printRanges(rangesDifference);
         System.out.println();
     }
 }
