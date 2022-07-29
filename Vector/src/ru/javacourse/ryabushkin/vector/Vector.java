@@ -63,11 +63,15 @@ public class Vector {
     }
 
     public Vector addVector(Vector vector) {
-        Vector resultVector = new Vector(Math.max(this.getSize(), vector.getSize()));
+        int vectorMaxLength = Math.max(this.getSize(), vector.getSize());
 
-        for (int i = 0; i < Math.min(this.getSize(), vector.getSize()); i++) {
-            resultVector.vector[i] = this.vector[i] + vector.vector[i];
+        Vector resultVector = new Vector(vectorMaxLength);
+
+        for (int i = 0; i < vectorMaxLength; i++) {
+            resultVector.vector[i] = ((i < this.vector.length) ? this.vector[i] : 0)
+                    + ((i < vector.getSize()) ? vector.vector[i] : 0);
         }
+
         return resultVector;
     }
 }
