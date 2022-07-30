@@ -2,7 +2,7 @@ package ru.javacourse.ryabushkin.vector;
 
 public class Vector {
 
-    private final double[] vector;
+    private double[] vector;
 
     public Vector (int dimension) { //+
         if (dimension <= 0) {
@@ -20,13 +20,13 @@ public class Vector {
         }
     }
 
-    public Vector (double[] vector) {
+    public Vector (double[] vector) { //+
         this.vector = new double[vector.length];
 
         System.arraycopy(vector, 0, this.vector, 0, vector.length);
     }
 
-    public Vector (int dimension, double[] vector) {
+    public Vector (int dimension, double[] vector) { //+
         int length = (Math.max(dimension, vector.length));
         this.vector = new double[length];
 
@@ -62,16 +62,64 @@ public class Vector {
         return stringBuilder.toString();
     }
 
-    public Vector addVector(Vector vector) {
+    public Vector VectorsSum(Vector vector) {
         int vectorMaxLength = Math.max(this.getSize(), vector.getSize());
 
         Vector resultVector = new Vector(vectorMaxLength);
 
         for (int i = 0; i < vectorMaxLength; i++) {
-            resultVector.vector[i] = ((i < this.vector.length) ? this.vector[i] : 0)
+            resultVector.vector[i] = ((i < this.getSize()) ? this.vector[i] : 0)
                     + ((i < vector.getSize()) ? vector.vector[i] : 0);
         }
 
         return resultVector;
+    }
+
+    public Vector VectorsDifference(Vector vector) {
+        int vectorMaxLength = Math.max(this.getSize(), vector.getSize());
+
+        Vector resultVector = new Vector(vectorMaxLength);
+
+        for (int i = 0; i < vectorMaxLength; i++) {
+            resultVector.vector[i] = ((i < this.getSize()) ? this.vector[i] : 0)
+                    - ((i < vector.getSize()) ? vector.vector[i] : 0);
+        }
+
+        return resultVector;
+    }
+
+    public Vector vectorMultiplicationScalar(int scalar) {
+        Vector resultVector = new Vector(vector);
+
+        for (int i = 0; i < resultVector.getSize(); i++) {
+            resultVector.vector[i] = resultVector.vector[i] * scalar;
+        }
+
+        return resultVector;
+    }
+
+    public Vector vectorReversal() {
+        Vector resultVector = new Vector(vector);
+
+        for (int i = 0; i < resultVector.getSize(); i++) {
+            resultVector.vector[i] = resultVector.vector[i] * -1;
+        }
+
+        return resultVector;
+    }
+
+    public double vectorLength() {
+        int vectorLength = 0;
+        Vector resultVector = new Vector(vector);
+
+        for (int i = 0; i < resultVector.getSize(); i++) {
+            resultVector.vector[i] = resultVector.vector[i] * resultVector.vector[i];
+        }
+
+        for (int i = 0; i < resultVector.getSize(); i++) {
+            vectorLength += Math.abs(Math.sqrt(resultVector.vector[i]));
+        }
+
+        return vectorLength;
     }
 }

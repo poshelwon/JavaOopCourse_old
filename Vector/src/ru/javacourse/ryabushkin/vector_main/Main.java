@@ -16,6 +16,14 @@ public class Main {
 
         vector2.setVector(vector2Array);
 
-        System.out.println(vector1.addVector(vector2));
+        System.out.println(vector1.VectorsSum(vector2));
+
+        System.out.println(vector2.VectorsDifference(vector1));
+
+        System.out.println(vector1.vectorMultiplicationScalar(2));
+
+        System.out.println(vector2.vectorReversal());
+
+        System.out.println((vector1.vectorLength()));
     }
 }
