@@ -8,11 +8,14 @@ public class Main {
 
         stringBuilder.append("[");
 
-        for (Range range : ranges) {
-            stringBuilder.append(range).append(", ");
+        if (ranges.length > 0) {
+            for (Range range : ranges) {
+                stringBuilder.append(range).append(", ");
+            }
+
+            stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
         }
 
-        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
         stringBuilder.append("]");
 
         System.out.print(stringBuilder);

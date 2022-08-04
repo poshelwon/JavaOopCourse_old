@@ -9,21 +9,22 @@ public class Range {
         this.to = to;
     }
 
+    public double getFrom() {
+        return from;
+    }
+
     public void setFrom(double from) {
         this.from = from;
     }
 
-    public double getFrom() {
-        return from;
+    public double getTo() {
+        return to;
     }
 
     public void setTo(double to) {
         this.to = to;
     }
 
-    public double getTo() {
-        return to;
-    }
 
     public double getLength() {
         return to - from;
@@ -47,18 +48,8 @@ public class Range {
     }
 
     public Range[] getUnion(Range range) {
-       /* if (to < range.from || from > range.to) { //3,4
-            if (from == range.to || to == range.from) { //1,2
-                return new Range[]{new Range(Math.min(from, range.from), Math.max(to, range.to))};
-            }
-
-            return new Range[]{new Range(from, to), new Range (range.from, range.to)};
-        }
-
-        return new Range[]{new Range(Math.min(from, range.from), Math.max(to, range.to))}; //5,6 */
-
         if (to < range.from || from > range.to) { //3,4
-            return new Range[]{new Range(from, to), new Range (range.from, range.to)};
+            return new Range[]{new Range(from, to), new Range(range.from, range.to)};
         }
 
         return new Range[]{new Range(Math.min(from, range.from), Math.max(to, range.to))}; //1,2,5,6
