@@ -1,14 +1,13 @@
-package ru.javacourse.ryabushkin.shape_main;
+package ru.javacourse.ryabushkin.shapes_main;
 
 import ru.javacourse.ryabushkin.shapes.*;
 
 import java.util.Arrays;
 
 public class Main {
-
-    static Shape getMaxAreaShape(Shape[] shapes) {
+    private static Shape getMaxAreaShape(Shape[] shapes) {
         if (shapes.length == 0) {
-            throw new IllegalArgumentException("Empty array passed");
+            throw new IllegalArgumentException("Array length must > 0. Length = " + shapes.length);
         }
 
         Arrays.sort(shapes, new AreaComparator());
@@ -16,9 +15,9 @@ public class Main {
         return shapes[shapes.length - 1];
     }
 
-    static Shape getPreMaxPerimeterShape(Shape[] shapes) {
-        if (shapes.length == 0) {
-            throw new IllegalArgumentException("Empty array passed");
+    private static Shape getSecondMaxPerimeterShape(Shape[] shapes) {
+        if (shapes.length < 2) {
+            throw new IllegalArgumentException("Array length must > 1. Length = " + shapes.length);
         }
 
         Arrays.sort(shapes, new PerimeterComparator());
@@ -29,7 +28,6 @@ public class Main {
     public static void main(String[] args) {
         Shape[] shapes = {
                 new Square(9),
-                new Rectangle(1, 2),
                 new Circle(1),
                 new Square(1.5),
                 new Triangle(-1, 1, 0, 2, 4, 1),
@@ -41,11 +39,9 @@ public class Main {
         };
 
         Shape maxAreaShape = getMaxAreaShape(shapes);
+        System.out.println("Max area: " + maxAreaShape);
 
-        System.out.println("Max area: shape = " + maxAreaShape.getName() + ", " + maxAreaShape);
-
-        Shape preMaxPerimeterShape = getPreMaxPerimeterShape(shapes);
-
-        System.out.println("Pre-max perimeter: shape = " + preMaxPerimeterShape.getName() + ", " + preMaxPerimeterShape);
+        Shape secondMaxPerimeterShape = getSecondMaxPerimeterShape(shapes);
+        System.out.println("Second max perimeter: " + secondMaxPerimeterShape);
     }
 }

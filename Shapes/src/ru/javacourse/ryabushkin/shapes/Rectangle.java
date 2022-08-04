@@ -9,6 +9,7 @@ public class Rectangle implements Shape {
         this.height = height;
     }
 
+    @Override
     public double getWidth() {
         return width;
     }
@@ -17,6 +18,7 @@ public class Rectangle implements Shape {
         this.width = width;
     }
 
+    @Override
     public double getHeight() {
         return height;
     }
@@ -52,17 +54,21 @@ public class Rectangle implements Shape {
 
     @Override
     public String toString() {
-        return "width = " + width + ", height = " + height +", area = " + getArea() + ", perimeter = " + getPerimeter();
+        return "Shape = " + getName() + ", width = " + width + ", height = " + height + ", area = " + getArea()
+                + ", perimeter = " + getPerimeter();
     }
 
+    @Override
     public String getName() {
         return "rectangle";
     }
 
+    @Override
     public double getArea() {
         return width * height;
     }
 
+    @Override
     public double getPerimeter() {
         return (width + height) * 2;
     }

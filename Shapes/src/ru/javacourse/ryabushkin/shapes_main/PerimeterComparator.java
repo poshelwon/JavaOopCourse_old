@@ -1,4 +1,4 @@
-package ru.javacourse.ryabushkin.shape_main;
+package ru.javacourse.ryabushkin.shapes_main;
 
 import ru.javacourse.ryabushkin.shapes.Shape;
 

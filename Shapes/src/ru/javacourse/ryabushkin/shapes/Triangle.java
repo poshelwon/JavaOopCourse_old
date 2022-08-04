@@ -97,30 +97,37 @@ public class Triangle implements Shape {
 
     @Override
     public String toString() {
-        return "coordinates = (" + x1 + "," + y1 + "), (" + x2 + "," + y2 + "), (" + x3 + "," + y3 + "), area = "
-                + getArea() + ", perimeter = " + getPerimeter();
+        return "Shape = " + getName() + ", coordinates = (" + x1 + ", " + y1 + "), (" + x2 + ", " + y2 + "), (" + x3 + ", "
+                + y3 + "), area = " + getArea() + ", perimeter = " + getPerimeter();
     }
 
+    @Override
     public String getName() {
         return "triangle";
     }
 
+    @Override
     public double getWidth() {
         return Math.max(Math.max(x1, x2), x3) - Math.min(Math.min(x1, x2), x3);
     }
 
+    @Override
     public double getHeight() {
         return Math.max(Math.max(y1, y2), y3) - Math.min(Math.min(y1, y2), y3);
     }
 
+    @Override
     public double getArea() {
         return Math.abs((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1)) / 2;
     }
 
+    @Override
     public double getPerimeter() {
-        // √((X₂-X₁)² + (Y₂-Y₁)²) + √(( X₃-X₂)² + (Y₃-Y₂)²) + √((X₃-X₁)² + (Y₃-Y₁)²).
+        return getTriangleSideLength(x1, x2, y1, y2) + getTriangleSideLength(x2, x3, y2, y3)
+                + getTriangleSideLength(x1, x3, y1, y3);
+    }
 
-        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)) + Math.sqrt(Math.pow(x3 - x2, 2) + Math.pow(y3 - y2, 2))
-                + Math.sqrt(Math.pow(x3 - x1, 2) + Math.pow(y3 - y1, 2));
+    private double getTriangleSideLength(double x1, double x2, double y1, double y2) {
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 }

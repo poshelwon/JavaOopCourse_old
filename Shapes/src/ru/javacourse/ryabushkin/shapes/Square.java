@@ -2,7 +2,7 @@ package ru.javacourse.ryabushkin.shapes;
 
 public class Square implements Shape {
     private double sideLength;
-    static final int sidesCount = 4;
+    private static final int SIDES_COUNT = 4;
 
     public Square(double sideLength) {
         this.sideLength = sideLength;
@@ -40,26 +40,32 @@ public class Square implements Shape {
 
     @Override
     public String toString() {
-        return "sideLength = " + sideLength + ", area = " + getArea() + ", perimeter = " + getPerimeter();
+        return "Shape = " + getName() + ", sideLength = " + sideLength + ", area = " + getArea()
+                + ", perimeter = " + getPerimeter();
     }
 
+    @Override
     public String getName() {
         return "square";
     }
 
+    @Override
     public double getWidth() {
         return sideLength;
     }
 
+    @Override
     public double getHeight() {
         return sideLength;
     }
 
+    @Override
     public double getArea() {
         return sideLength * sideLength;
     }
 
+    @Override
     public double getPerimeter() {
-        return sideLength * sidesCount;
+        return sideLength * SIDES_COUNT;
     }
 }

@@ -39,25 +39,30 @@ public class Circle implements Shape {
 
     @Override
     public String toString() {
-        return "radius = " + radius + ", area = " + getArea() + ", perimeter = " + getPerimeter();
+        return "Shape = " + getName() + ", radius = " + radius + ", area = " + getArea() + ", perimeter = " + getPerimeter();
     }
 
+    @Override
     public String getName() {
         return "circle";
     }
 
+    @Override
     public double getWidth() {
         return radius * 2;
     }
 
+    @Override
     public double getHeight() {
         return radius * 2;
     }
 
+    @Override
     public double getArea() {
         return Math.PI * radius * radius;
     }
 
+    @Override
     public double getPerimeter() {
         return Math.PI * radius * 2;
     }
