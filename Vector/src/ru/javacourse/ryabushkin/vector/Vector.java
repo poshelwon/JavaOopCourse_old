@@ -1,18 +1,20 @@
 package ru.javacourse.ryabushkin.vector;
 
+import java.util.Arrays;
+
 public class Vector {
 
-    private double[] vector;
+    private final double[] vector;
 
-    public Vector (int dimension) { //+
+    public Vector(int dimension) {
         if (dimension <= 0) {
-            throw new IllegalArgumentException("dimension <= 0");
+            throw new IllegalArgumentException("Dimension must >= 0. dimension = " + dimension);
         }
 
         vector = new double[dimension];
     }
 
-    public Vector (Vector vector) { //+
+    public Vector(Vector vector) {
         this.vector = new double[vector.vector.length];
 
         for (int i = 0, j = 0; i < vector.vector.length; i++, j++) {
@@ -20,18 +22,18 @@ public class Vector {
         }
     }
 
-    public Vector (double[] vector) { //+
+    public Vector(double[] vector) {
         this.vector = new double[vector.length];
 
         System.arraycopy(vector, 0, this.vector, 0, vector.length);
     }
 
-    public Vector (int dimension, double[] vector) { //+
+    public Vector(int dimension, double[] vector) {
         int length = (Math.max(dimension, vector.length));
         this.vector = new double[length];
 
         for (int i = 0, j = 0; i < Math.min(dimension, vector.length); i++, j++) {
-                this.vector[i] = vector[i];
+            this.vector[i] = vector[i];
         }
     }
 
@@ -40,12 +42,42 @@ public class Vector {
         return vector;
     }
 
-    public void setVector (double[] vector) {
+    public void setVector(double[] vector) {
         System.arraycopy(vector, 0, this.vector, 0, vector.length);
     }
 
-    public int getSize() {
-        return vector.length;
+    public static Vector getVectorsSum(Vector vector1, Vector vector2) {
+        int vectorMaxLength = Math.max(vector1.getSize(), vector2.getSize());
+
+        Vector resultVector = new Vector(vectorMaxLength);
+
+        for (int i = 0; i < vectorMaxLength; i++) {
+            resultVector.vector[i] = ((i < vector1.getSize()) ? vector1.vector[i] : 0)
+                    + ((i < vector2.getSize()) ? vector2.vector[i] : 0);
+        }
+
+        return resultVector;
+    }
+
+    public static Vector getVectorsDifference(Vector vector1, Vector vector2) {
+        int maxLength = Math.max(vector1.getSize(), vector2.getSize());
+
+        Vector resultVector = new Vector(maxLength);
+
+        for (int i = 0; i < maxLength; i++) {
+            resultVector.vector[i] = ((i < vector1.getSize()) ? vector1.vector[i] : 0)
+                    - ((i < vector2.getSize()) ? vector2.vector[i] : 0);
+        }
+
+        return resultVector;
+    }
+
+    public static void scalarVector(Vector vector1, Vector vector2) {
+        int minLength = Math.min(vector1.getSize(), vector2.getSize());
+
+        for (int i = 0; i < minLength; i++) {
+            vector1.vector[i] *= vector2.vector[i];
+        }
     }
 
     @Override
@@ -62,33 +94,49 @@ public class Vector {
         return stringBuilder.toString();
     }
 
-    public Vector VectorsSum(Vector vector) {
-        int vectorMaxLength = Math.max(this.getSize(), vector.getSize());
-
-        Vector resultVector = new Vector(vectorMaxLength);
-
-        for (int i = 0; i < vectorMaxLength; i++) {
-            resultVector.vector[i] = ((i < this.getSize()) ? this.vector[i] : 0)
-                    + ((i < vector.getSize()) ? vector.vector[i] : 0);
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
         }
 
-        return resultVector;
-    }
-
-    public Vector VectorsDifference(Vector vector) {
-        int vectorMaxLength = Math.max(this.getSize(), vector.getSize());
-
-        Vector resultVector = new Vector(vectorMaxLength);
-
-        for (int i = 0; i < vectorMaxLength; i++) {
-            resultVector.vector[i] = ((i < this.getSize()) ? this.vector[i] : 0)
-                    - ((i < vector.getSize()) ? vector.vector[i] : 0);
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
         }
 
-        return resultVector;
+        Vector vector = (Vector) obj;
+        return Arrays.equals(this.vector, vector.vector);
     }
 
-    public Vector vectorMultiplicationScalar(int scalar) {
+    @Override
+    public int hashCode() {
+        final int prime = 37;
+        int hash = 1;
+
+        return prime * hash + Arrays.hashCode(vector);
+    }
+
+    public int getSize() {
+        return vector.length;
+    }
+
+    public void addVector(Vector vector) {
+        int minLength = Math.min(this.vector.length, vector.vector.length);
+
+        for (int i = 0; i < minLength; i++) {
+            this.vector[i] += vector.vector[i];
+        }
+    }
+
+    public void differenceVector(Vector vector) {
+        int minLength = Math.min(this.vector.length, vector.vector.length);
+
+        for (int i = 0; i < minLength; i++) {
+            this.vector[i] -= vector.vector[i];
+        }
+    }
+
+    public Vector getVectorMultiplicationScalar(int scalar) {
         Vector resultVector = new Vector(vector);
 
         for (int i = 0; i < resultVector.getSize(); i++) {
@@ -98,7 +146,7 @@ public class Vector {
         return resultVector;
     }
 
-    public Vector vectorReversal() {
+    public Vector getVectorReversal() {
         Vector resultVector = new Vector(vector);
 
         for (int i = 0; i < resultVector.getSize(); i++) {
@@ -108,18 +156,21 @@ public class Vector {
         return resultVector;
     }
 
-    public double vectorLength() {
-        int vectorLength = 0;
-        Vector resultVector = new Vector(vector);
+    public double getVectorLength() {
+        double vectorLength = 0;
 
-        for (int i = 0; i < resultVector.getSize(); i++) {
-            resultVector.vector[i] = resultVector.vector[i] * resultVector.vector[i];
+        for (double i : vector) {
+            vectorLength += Math.sqrt(i * i);
         }
 
-        for (int i = 0; i < resultVector.getSize(); i++) {
-            vectorLength += Math.abs(Math.sqrt(resultVector.vector[i]));
-        }
+        return Math.abs(vectorLength);
+    }
 
-        return vectorLength;
+    public void setComponent(int index, double number) {
+        vector[index] = number;
+    }
+
+    public double getComponent(int index) {
+        return vector[index];
     }
 }

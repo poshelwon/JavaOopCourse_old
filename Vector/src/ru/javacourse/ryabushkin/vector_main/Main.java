@@ -16,14 +16,44 @@ public class Main {
 
         vector2.setVector(vector2Array);
 
-        System.out.println(vector1.VectorsSum(vector2));
+        Vector vector3 = new Vector(vector2);
 
-        System.out.println(vector2.VectorsDifference(vector1));
+        int dimension = 4;
 
-        System.out.println(vector1.vectorMultiplicationScalar(2));
+        Vector vector4 = new Vector(dimension, vector3.getVector());
 
-        System.out.println(vector2.vectorReversal());
+        //Проверка методов, каждое изменение исходных векторов помечается "vector%№% ="
+        System.out.println("vector1 = " + vector1);
+        System.out.println("vector2 = " + vector2);
+        System.out.println("vector3 = " + vector3);
+        System.out.println("vector4 = " + vector4);
 
-        System.out.println((vector1.vectorLength()));
+        System.out.println(Vector.getVectorsSum(vector1, vector2));
+
+        System.out.println(Vector.getVectorsDifference(vector1, vector2));
+
+        Vector.scalarVector(vector1, vector4);
+        System.out.println("vector1 = " + vector1);
+
+        System.out.println(vector3.equals(vector2));
+
+        System.out.println(vector3.hashCode() == vector2.hashCode());
+
+        vector4.addVector(vector1);
+        System.out.println("vector4 = " + vector4);
+
+        vector2.differenceVector(vector1);
+        System.out.println("vector2 = " + vector2);
+
+        System.out.println(vector1.getVectorMultiplicationScalar(2));
+
+        System.out.println(vector2.getVectorReversal());
+
+        System.out.println((vector1.getVectorLength()));
+
+        double component = vector1.getComponent(0);
+
+        vector1.setComponent(1, component);
+        System.out.println("vector1 = " + vector1);
     }
 }
