@@ -3,7 +3,6 @@ package ru.javacourse.ryabushkin.vector;
 import java.util.Arrays;
 
 public class Vector {
-
     private final double[] vector;
 
     public Vector(int dimension) {
